@@ -46,132 +46,70 @@ function nameValidation(stri){
     }
 }
 
-// function len1(stri,minlen=6){
-//     if(stri.length==0){
-//         // alert('field can not be empty');
-//         return false;
-//     }
-//     else if(stri.length <minlen){
-//         // alert("field should have atleast "+minlen +" length" );
-//         return stri.length;
-//     }
-//     return true;
-// }
+function review(ref,cls,stri,flag,num,fld,validation){
+        stril = stri.length;
+        var txt1 = "field required";
+        var txt11 = $('<span class="error"></span>').text(txt1);
+        var val = "atleast";
+        if(flag==1){
+            val = "exact";
+        }
+        var txt2 = "field should have "+ val +" "+ num +" chars";
+        var txt22 = $('<span class="error"></span>').text(txt2);
+        var txt3 = "invalid "+ fld;
+        var txt33 = $('<span class="error"></span>').text(txt3);
 
+       
+        
+        if(stril===0){
+            ref.find(cls).html(txt11);
+        }
+        else if(flag && stril!=num){
+            ref.find(cls).html(txt22);
+        }
+        else if(stril < num && !flag){
+            ref.find(cls).html(txt22);
+        }
+        else if(!validation)
+        {
+            ref.find(cls).html(txt33);
+        }
+        else{
+            ref.find(cls).html('<span></span>');
+        }
+}
 
 $(document).ready(function(){
     $("#sub1").submit(function(e){
        e.preventDefault();
         var stri = $("#mail").val();
-        stril = stri.length;    
-        if(stril===0){
-            $(this).find(".mail").html('<span class="error">field required</span>');
-        }
-        else if(stril < 4){
-            $(this).find(".mail").html('<span class="error">field should have atleast 4 chars</span>');
-        }
-        else if(!emailValidation(stri))
-        {
-            $(this).find(".mail").html('<span class="error">invalid mail</span>');
-        }
-        else{
-            $(this).find(".mail").html('<span></span>');
-        }
-
-
-
+        var ref = $(this);
+        var validation;
+        validation = emailValidation(stri);
+        review(ref,'.mail',stri,0,4,"mail",validation);    
         var zip1 = $("#zip").val();
-
-        stril = zip1.length;
-        if(stril===0){
-            $(this).find(".zip").html('<span class="error">field required</span>');
-        }
-        else if(stril !== 5){
-            $(this).find(".zip").html('<span class="error">field should have 5 chars</span>');
-        }
-        else if(!zipCode(zip1)){
-            $(this).find('.zip').html('<span class="error">invalid zip</span>');
-        }
-        else{
-            $(this).find('.zip').html('<span></span>');
-        }
+        validation = zipCode(zip1);
+        review(ref,'.zip',zip1,1,5,"zip",validation);
 
         var pass1 = $("#pass").val();
-
-
-        stril = pass1.length;
-        if(stril===0){
-            $(this).find(".pass").html('<span class="error">field required</span>');
-        }
-        else if(stril < 8) {
-            $(this).find(".pass").html('<span class="error">field should have atleast 8 chars</span>');
-        }
-        
-        else if(!passwordValidation(pass1)){
-            // alert("enter valid password");
-            $(this).find('.pass').html('<span class="error">invalid password</span>');
-
-        }
-        else{
-            $(this).find('.pass').html('<span></span>');
-           }
-
+        validation = passwordValidation(pass1);
+        review(ref,'.pass',pass1,0,8,'password',validation)
         var name1 = $("#name").val();
-
-        stril = name1.length;
-        if(stril===0){
-            $(this).find(".name").html('<span class="error">field required</span>');
-        }
-        else if(stril <= 4){
-            $(this).find(".name").html('<span class="error">field should have atleast 4 chars</span>');
-        }
-        else if(!nameValidation(name1)){
-            // alert('enter valid name');
-            $(this).find('.name').html('<span class="error">invalid name</span>');
-        }
-        else{
-            $(this).find('.name').html('<span></span>');
-
-        }
+        validation = nameValidation(name1);
+        review(ref,'.name',name1,0,4,"name",validation);
         
     });
 
     $("#sub2").submit(function(e){
         e.preventDefault();
         var pass1 = $("#pass1").val();
-
-        stril = pass1.length;
-        if(stril===0){
-            $(this).find(".pass").html('<span class="error">field required</span>');
-        }
-        else if(stril < 8) {
-            $(this).find(".pass").html('<span class="error">field should have atleast 8 chars</span>');
-        }
-        
-        else if(!passwordValidation(pass1)){
-            // alert("enter valid password");
-            $(this).find('.pass').html('<span class="error">invalid password</span>');
-
-        }
-        else{
-            $(this).find('.pass').html('<span></span>');
-        }
+        var validation;
+        validation = passwordValidation(pass1);
+        var ref = $(this);
+        review(ref,'.pass',pass1,0,8,'password',validation);
         var stri = $("#mail2").val();
-        stril = stri.length;
-        if(stril===0){
-            $(this).find(".mail").html('<span class="error">field required</span>');
-        }
-        else if(stril <= 8){
-            $(this).find(".mail").html('<span class="error">field should have atleast 8 chars</span>');
-        }
-        else if(!emailValidation(stri))
-        {
-            $(this).find(".mail").html('<span class="error">invalid mail</span>');
-        }
-        else{
-            $(this).find(".mail").html('<span></span>');
-        }
-
+        validation = emailValidation(stri);
+        review(ref,'.mail',stri,0,4,'email',validation);
       });
 
        
